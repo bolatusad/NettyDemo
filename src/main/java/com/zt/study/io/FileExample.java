@@ -10,7 +10,7 @@ import java.util.Date;
  * @author: zhangxiaohua
  * @create 2017/9/13 19:45
  **/
-public class FileExample {
+public class FileExample implements Serializable{
     public static void main(String[] args) {
         File file = new File("F:\\workpace\\idea\\study\\NettyDemo\\src\\main\\java\\com\\zt\\study\\io\\test.txt");
         if(file.exists()){
@@ -119,7 +119,10 @@ public class FileExample {
         objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
         objectOutputStream.writeObject(people);
         objectOutputStream.flush();
+        objectInputStream = new ObjectInputStream(new FileInputStream(file));
+        System.out.println(objectInputStream.readObject());
 
+        objectInputStream.close();
         objectOutputStream.close();;
 
 
@@ -129,12 +132,9 @@ public class FileExample {
     }
 
     /**
-     * people类，用于测试对象流
+     * people类，用于测试对象流,内部类，不仅内部类要实现Serializable，其所属的类也要实现
      */
     class People implements Serializable{
-
-
-
         private String name;
         private Integer age;
         private String phone;
@@ -161,6 +161,15 @@ public class FileExample {
 
         public void setPhone(String phone) {
             this.phone = phone;
+        }
+
+        @Override
+        public String toString() {
+            return "People{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    ", phone='" + phone + '\'' +
+                    '}';
         }
     }
 }
