@@ -106,4 +106,19 @@ public class JavaIOStudy {
         System.out.println(inputStr);
     }
 
+    @Test
+    public void testReadBigFile() throws IOException {
+        File file = new File("F:"+File.separator+"study"+File.separator+"Postman.exe");
+        File file1 = new File("F:"+File.separator+"study"+File.separator+"test.txt");
+        InputStream inputStream = new FileInputStream(file);
+        OutputStream outputStream = new FileOutputStream(file1,true);
+        int readIndex = 0;
+        byte[] buf = new byte[1024*5];
+        while ((readIndex = inputStream.read(buf)) != -1){
+            outputStream.write(buf);
+        }
+        outputStream.close();
+        inputStream.close();
+    }
+
 }
