@@ -27,9 +27,13 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter {
 //            }
             //调用netty 提供的工具
             System.out.println(in.toString(io.netty.util.CharsetUtil.US_ASCII));
+
+            //写回数据
+            ctx.write(msg);
+            ctx.flush();
         } finally {
             //释放收到的buf
-            ReferenceCountUtil.release(msg);
+//            ReferenceCountUtil.release(msg);
         }
     }
 
