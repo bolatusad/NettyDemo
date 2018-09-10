@@ -18,14 +18,17 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
     //因此，需要先进行解码，可以提供一个解码的程序类，如果有足够的，才进行解析
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf m = (ByteBuf) msg;
-        try {
-            long currentTimeMillis = (m.readUnsignedInt() - 2208988800L) * 1000L;
-            System.out.println(new Date(currentTimeMillis));
-            ctx.close();
-        } finally {
-            m.release();
-        }
+//        ByteBuf m = (ByteBuf) msg;
+//        try {
+//            long currentTimeMillis = (m.readUnsignedInt() - 2208988800L) * 1000L;
+//            System.out.println(new Date(currentTimeMillis));
+//            ctx.close();
+//        } finally {
+//            m.release();
+//        }
+        UnixTime unixTime = (UnixTime) msg;
+        System.out.println(unixTime);
+        ctx.close();
     }
 
     @Override

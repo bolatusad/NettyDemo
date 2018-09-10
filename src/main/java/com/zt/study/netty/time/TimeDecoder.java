@@ -16,9 +16,14 @@ public class TimeDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        System.out.println("1111111111111");
         if(in.readableBytes() < 4){
             return;
         }
-        out.add(in.readBytes(4));
+//        out.add(in.readBytes(4));
+
+        System.out.println("2222222222222222");
+        //解析成一个对象
+        out.add(new UnixTime(in.readUnsignedInt()));
     }
 }
