@@ -37,6 +37,7 @@ public class AppTest
 
         System.out.println("hello");
         testAA(20);
+        testAA(30);
     }
 
     public void testAA(Integer a){
