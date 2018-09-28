@@ -33,6 +33,24 @@ public class AppTest
      */
     public void testApp()
     {
-        assertTrue( true );
+//        assertTrue( true );
+
+        System.out.println("hello");
+        testAA(20);
     }
+
+    public void testAA(Integer a){
+        Integer c = a;
+
+        a = 10;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("");
+            }
+        });
+        System.out.println(c);
+    }
+
+
 }

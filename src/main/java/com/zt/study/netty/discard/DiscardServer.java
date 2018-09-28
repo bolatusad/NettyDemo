@@ -10,6 +10,8 @@ import io.netty.channel.sctp.nio.NioSctpServerChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 /**
  * @ Author: zxh
@@ -33,14 +35,21 @@ public class DiscardServer {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
+                    .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new DiscardServerHandler());
+                            ch.pipeline().addLast(new LoggingHandler(LogLevel.INFO), new DiscardServerHandler());
                         }
                     })
+                    //设置发送缓冲大小
+                    .option(ChannelOption.SO_SNDBUF, 32*1024)
+                    //这是接收缓冲大小
+                    .option(ChannelOption.SO_RCVBUF, 32*1024)
+                    //TCP 队列缓冲区
                     .option(ChannelOption.SO_BACKLOG, 128)
+                    // 保持连接
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             System.out.println("server start at 8888......");
             //绑定并开始接受连接
